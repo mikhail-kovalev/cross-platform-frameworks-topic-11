@@ -17,8 +17,8 @@ void main() {
     expect(find.text('Кроссплатформенные фреймворки'), findsOneWidget);
     expect(find.text('Flutter'), findsOneWidget);
     expect(find.text('Основные особенности'), findsOneWidget);
-    expect(find.text('ФИО СТУДЕНТА'), findsOneWidget);
-    expect(find.text('Группа: НОМЕР ГРУППЫ'), findsOneWidget);
+    expect(find.text('Ковалев М.М.'), findsOneWidget);
+    expect(find.text('Группа: ИКБО-62-23'), findsOneWidget);
     expect(find.byType(SingleChildScrollView), findsOneWidget);
     expect(find.byType(Image), findsOneWidget);
   });

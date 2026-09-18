@@ -25,8 +25,8 @@ class CrossPlatformFrameworksApp extends StatelessWidget {
 class FrameworkPage extends StatelessWidget {
   const FrameworkPage({super.key});
 
-  static const String studentName = 'ФИО СТУДЕНТА';
-  static const String studentGroup = 'НОМЕР ГРУППЫ';
+  static const String studentName = 'Ковалев М.М.';
+  static const String studentGroup = 'ИКБО-62-23';
 
   @override
   Widget build(BuildContext context) {
