@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('экран содержит обязательные элементы макета', (
+  testWidgets('экран практической работы 2 содержит обязательные элементы', (
     WidgetTester tester,
   ) async {
     tester.view.physicalSize = const Size(720, 900);
@@ -11,12 +11,12 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await tester.pumpWidget(const CrossPlatformFrameworksApp());
+    await tester.pumpWidget(const ElectronicDevicesApp());
     await tester.pump();
 
-    expect(find.text('Кроссплатформенные фреймворки'), findsOneWidget);
-    expect(find.text('Flutter'), findsOneWidget);
-    expect(find.text('Основные особенности'), findsOneWidget);
+    expect(find.text('Электронные устройства'), findsOneWidget);
+    expect(find.text('Смартфон'), findsOneWidget);
+    expect(find.text('Основные характеристики'), findsOneWidget);
     expect(find.text('Ковалев М.М.'), findsOneWidget);
     expect(find.text('Группа: ИКБО-62-23'), findsOneWidget);
     expect(find.byType(SingleChildScrollView), findsOneWidget);

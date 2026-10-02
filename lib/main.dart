@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const CrossPlatformFrameworksApp());
+  runApp(const ElectronicDevicesApp());
 }
 
-class CrossPlatformFrameworksApp extends StatelessWidget {
-  const CrossPlatformFrameworksApp({super.key});
+class ElectronicDevicesApp extends StatelessWidget {
+  const ElectronicDevicesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Кроссплатформенные фреймворки',
+      title: 'Электронные устройства',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0553B1)),
-        scaffoldBackgroundColor: const Color(0xFFF5F8FC),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2457C5)),
+        scaffoldBackgroundColor: const Color(0xFFF3F6FC),
         useMaterial3: true,
       ),
-      home: const FrameworkPage(),
+      home: const ElectronicDevicesPage(),
     );
   }
 }
 
-class FrameworkPage extends StatelessWidget {
-  const FrameworkPage({super.key});
+class ElectronicDevicesPage extends StatelessWidget {
+  const ElectronicDevicesPage({super.key});
 
   static const String studentName = 'Ковалев М.М.';
   static const String studentGroup = 'ИКБО-62-23';
@@ -38,7 +38,7 @@ class FrameworkPage extends StatelessWidget {
         foregroundColor: colors.onPrimary,
         centerTitle: true,
         title: const Text(
-          'Кроссплатформенные фреймворки',
+          'Электронные устройства',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
@@ -53,7 +53,7 @@ class FrameworkPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
               boxShadow: const [
                 BoxShadow(
-                  color: Color(0x18001A3A),
+                  color: Color(0x1800184D),
                   blurRadius: 24,
                   offset: Offset(0, 8),
                 ),
@@ -72,7 +72,7 @@ class FrameworkPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: const Text(
-                    'Flutter',
+                    'Смартфон',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
                   ),
@@ -81,9 +81,8 @@ class FrameworkPage extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    'Flutter — кроссплатформенный фреймворк для создания '
-                    'мобильных, веб- и настольных приложений из единой кодовой '
-                    'базы. Интерфейс строится из виджетов, а код пишется на Dart.',
+                    'Смартфон объединяет средства связи, камеру, навигацию '
+                    'и доступ к цифровым сервисам в одном компактном корпусе.',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 17, height: 1.45),
                   ),
@@ -94,15 +93,15 @@ class FrameworkPage extends StatelessWidget {
                 LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                     final bool isCompact = constraints.maxWidth < 520;
-                    const Widget logo = _FrameworkLogo();
-                    const Widget features = _FeatureList();
+                    const Widget image = _DeviceImage();
+                    const Widget features = _DeviceFeatureList();
 
                     if (isCompact) {
                       return const Column(
                         children: [
-                          _FrameworkLogo(),
+                          _DeviceImage(),
                           SizedBox(height: 20),
-                          _FeatureList(),
+                          _DeviceFeatureList(),
                         ],
                       );
                     }
@@ -110,7 +109,7 @@ class FrameworkPage extends StatelessWidget {
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(child: logo),
+                        Expanded(child: image),
                         const SizedBox(width: 24),
                         const Expanded(child: features),
                       ],
@@ -123,7 +122,7 @@ class FrameworkPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0F5FC),
+                    color: const Color(0xFFF0F4FC),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: const Row(
@@ -131,7 +130,7 @@ class FrameworkPage extends StatelessWidget {
                       Icon(
                         Icons.account_circle_outlined,
                         size: 44,
-                        color: Color(0xFF0553B1),
+                        color: Color(0xFF2457C5),
                       ),
                       SizedBox(width: 14),
                       Expanded(
@@ -165,37 +164,37 @@ class FrameworkPage extends StatelessWidget {
   }
 }
 
-class _FrameworkLogo extends StatelessWidget {
-  const _FrameworkLogo();
+class _DeviceImage extends StatelessWidget {
+  const _DeviceImage();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 230,
-      padding: const EdgeInsets.all(22),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5FAFF),
+        color: const Color(0xFFF5F8FF),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFD4E5F8)),
+        border: Border.all(color: const Color(0xFFD5E0F5)),
       ),
       child: Image.asset(
-        'assets/flutter-mark-square-64.png',
+        'assets/images/smartphone.png',
         fit: BoxFit.contain,
         filterQuality: FilterQuality.high,
-        semanticLabel: 'Логотип Flutter',
+        semanticLabel: 'Смартфон',
       ),
     );
   }
 }
 
-class _FeatureList extends StatelessWidget {
-  const _FeatureList();
+class _DeviceFeatureList extends StatelessWidget {
+  const _DeviceFeatureList();
 
   static const List<(IconData, String)> features = [
-    (Icons.code, 'Язык программирования Dart'),
-    (Icons.layers_outlined, 'Единая кодовая база'),
-    (Icons.bolt, 'Быстрая разработка с Hot Reload'),
-    (Icons.devices, 'Android, iOS, Web и Desktop'),
+    (Icons.category_outlined, 'Категория: мобильная электроника'),
+    (Icons.apps_outlined, 'Связь, приложения и мультимедиа'),
+    (Icons.wifi, 'Wi-Fi, Bluetooth и мобильная сеть'),
+    (Icons.battery_charging_full, 'Встроенный аккумулятор'),
   ];
 
   @override
@@ -206,7 +205,7 @@ class _FeatureList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Основные особенности',
+          'Основные характеристики',
           style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 12),
