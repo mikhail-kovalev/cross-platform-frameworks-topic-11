@@ -13,8 +13,7 @@ class ElectronicDevicesApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Электронные устройства',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2457C5)),
-        scaffoldBackgroundColor: const Color(0xFFF3F6FC),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const ElectronicDevicesPage(),
@@ -30,9 +29,6 @@ class ElectronicDevicesPage extends StatefulWidget {
 }
 
 class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
-  static const String studentName = 'Ковалев М.М.';
-  static const String studentGroup = 'ИКБО-62-23';
-
   static const List<DeviceItem> devices = [
     DeviceItem(
       name: 'Смартфон',
@@ -41,7 +37,6 @@ class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
       interfaces: 'Сотовая сеть, Wi-Fi и Bluetooth',
       description: 'Смартфон объединяет средства связи, камеру, навигацию и доступ к цифровым сервисам.',
       imagePath: 'assets/images/smartphone.png',
-      icon: Icons.smartphone,
     ),
     DeviceItem(
       name: 'Ноутбук',
@@ -50,7 +45,6 @@ class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
       interfaces: 'Wi-Fi, Bluetooth и USB',
       description: 'Ноутбук сочетает производительность персонального компьютера и мобильность.',
       imagePath: 'assets/images/laptop.png',
-      icon: Icons.laptop_mac,
     ),
     DeviceItem(
       name: 'Цифровая камера',
@@ -60,7 +54,6 @@ class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
       description:
           'Цифровая камера сохраняет фотографии и видео в электронном формате.',
       imagePath: 'assets/images/camera.png',
-      icon: Icons.photo_camera_outlined,
     ),
     DeviceItem(
       name: 'Беспроводные наушники',
@@ -69,7 +62,6 @@ class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
       interfaces: 'Bluetooth и USB-C',
       description: 'Беспроводные наушники воспроизводят звук и позволяют общаться без кабеля.',
       imagePath: 'assets/images/headphones.png',
-      icon: Icons.headphones,
     ),
     DeviceItem(
       name: 'Умные часы',
@@ -78,7 +70,6 @@ class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
       interfaces: 'Bluetooth, NFC и Wi-Fi',
       description: 'Умные часы отображают уведомления и помогают отслеживать физическую активность.',
       imagePath: 'assets/images/smartwatch.png',
-      icon: Icons.watch_outlined,
     ),
   ];
 
@@ -92,195 +83,96 @@ class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colors = Theme.of(context).colorScheme;
     final DeviceItem device = devices[_currentIndex];
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colors.primary,
-        foregroundColor: colors.onPrimary,
-        centerTitle: true,
+        backgroundColor: Colors.blue.shade700,
+        foregroundColor: Colors.white,
         title: const Text(
           'Электронные устройства',
-          style: TextStyle(
-            fontFamily: 'DeviceDisplay',
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontFamily: 'DeviceDisplay'),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 680),
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x1800184D),
-                  blurRadius: 24,
-                  offset: Offset(0, 8),
-                ),
-              ],
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              device.name,
+              style: const TextStyle(
+                fontFamily: 'DeviceDisplay',
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: Container(
-                    key: ValueKey<String>(device.name),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18,
-                      vertical: 15,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colors.primaryContainer,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(device.icon, size: 30, color: colors.primary),
-                        const SizedBox(width: 10),
-                        Flexible(
-                          child: Text(
-                            device.name,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontFamily: 'DeviceDisplay',
-                              fontSize: 28,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+            const SizedBox(height: 8),
+            Text(device.description, style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 16),
+            InkWell(
+              key: const Key('device-image'),
+              onTap: _showNextDevice,
+              child: Container(
+                width: double.infinity,
+                height: 300,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  border: Border.all(color: Colors.grey.shade400),
                 ),
-                const SizedBox(height: 18),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    device.description,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 17, height: 1.4),
-                  ),
+                child: Image.asset(
+                  device.imagePath,
+                  fit: BoxFit.contain,
+                  semanticLabel: device.name,
                 ),
-                const SizedBox(height: 18),
-                const Divider(),
-                const SizedBox(height: 18),
-                LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    final bool isCompact = constraints.maxWidth < 520;
-                    final Widget image = _DeviceImage(
-                      device: device,
-                      onTap: _showNextDevice,
-                    );
-                    final Widget details = _DeviceDetails(device: device);
-
-                    if (isCompact) {
-                      return Column(
-                        children: [image, const SizedBox(height: 18), details],
-                      );
-                    }
-
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(child: image),
-                        const SizedBox(width: 24),
-                        Expanded(child: details),
-                      ],
-                    );
-                  },
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  'Нажмите на изображение или кнопку, чтобы перейти к следующему устройству.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: colors.onSurfaceVariant, height: 1.3),
-                ),
-                const SizedBox(height: 12),
-                ElevatedButton.icon(
-                  key: const Key('next-device-button'),
-                  onPressed: _showNextDevice,
-                  icon: const Icon(Icons.arrow_forward_rounded),
-                  label: const Text('Следующее устройство'),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    textStyle: const TextStyle(
-                      fontFamily: 'DeviceDisplay',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (int index = 0; index < devices.length; index++)
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        width: index == _currentIndex ? 22 : 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 3),
-                        decoration: BoxDecoration(
-                          color: index == _currentIndex
-                              ? colors.primary
-                              : colors.outlineVariant,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    const SizedBox(width: 10),
-                    Text('${_currentIndex + 1} из ${devices.length}'),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Divider(),
-                const SizedBox(height: 14),
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF0F4FC),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const Row(
-                    children: [
-                      Icon(
-                        Icons.account_circle_outlined,
-                        size: 42,
-                        color: Color(0xFF2457C5),
-                      ),
-                      SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              studentName,
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            SizedBox(height: 3),
-                            Text(
-                              'Группа: $studentGroup',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            const SizedBox(height: 6),
+            const Text(
+              'Нажмите на изображение, чтобы показать следующее устройство',
+              style: TextStyle(fontSize: 13, color: Colors.black54),
+            ),
+            const SizedBox(height: 12),
+            const Divider(),
+            const Text(
+              'Характеристики',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            _PropertyRow(
+              icon: Icons.category_outlined,
+              label: 'Категория',
+              value: device.category,
+            ),
+            _PropertyRow(
+              icon: Icons.task_alt,
+              label: 'Назначение',
+              value: device.purpose,
+            ),
+            _PropertyRow(
+              icon: Icons.settings_input_antenna,
+              label: 'Интерфейсы',
+              value: device.interfaces,
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                key: const Key('next-device-button'),
+                onPressed: _showNextDevice,
+                child: const Text('Следующее устройство'),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Center(child: Text('Устройство ${_currentIndex + 1} из 5')),
+            const SizedBox(height: 16),
+            const Divider(),
+            const Text(
+              'Выполнил: Ковалев М.М.',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const Text('Группа: ИКБО-62-23'),
+          ],
         ),
       ),
     );
@@ -295,7 +187,6 @@ class DeviceItem {
     required this.interfaces,
     required this.description,
     required this.imagePath,
-    required this.icon,
   });
 
   final String name;
@@ -304,86 +195,27 @@ class DeviceItem {
   final String interfaces;
   final String description;
   final String imagePath;
+}
+
+class _PropertyRow extends StatelessWidget {
+  const _PropertyRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
   final IconData icon;
-}
-
-class _DeviceImage extends StatelessWidget {
-  const _DeviceImage({required this.device, required this.onTap});
-
-  final DeviceItem device;
-  final VoidCallback onTap;
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'Показать следующее устройство',
-      child: GestureDetector(
-        key: const Key('device-image'),
-        onTap: onTap,
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          child: Container(
-            key: ValueKey<String>(device.imagePath),
-            height: 230,
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F8FF),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFFD5E0F5)),
-            ),
-            child: Image.asset(
-              device.imagePath,
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.high,
-              semanticLabel: device.name,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _DeviceDetails extends StatelessWidget {
-  const _DeviceDetails({required this.device});
-
-  final DeviceItem device;
-
-  @override
-  Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    final List<(IconData, String)> details = [
-      (Icons.category_outlined, device.category),
-      (Icons.task_alt, device.purpose),
-      (Icons.settings_input_antenna, device.interfaces),
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Характеристики',
-          style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
-        ),
-        const SizedBox(height: 12),
-        for (final (IconData icon, String label) in details) ...[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(icon, size: 22, color: primary),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  label,
-                  style: const TextStyle(fontSize: 16, height: 1.35),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 13),
-        ],
-      ],
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      dense: true,
+      leading: Icon(icon),
+      title: Text(label),
+      subtitle: Text(value),
     );
   }
 }
