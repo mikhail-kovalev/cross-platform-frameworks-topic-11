@@ -18,11 +18,10 @@ void main() {
   ) async {
     await pumpApp(tester);
 
-    expect(find.text('Электронные устройства'), findsOneWidget);
+    expect(find.text('ЭЛЕКТРОННЫЕ УСТРОЙСТВА'), findsOneWidget);
     expect(find.text('Смартфон'), findsOneWidget);
-    expect(find.text('Устройство 1 из 5'), findsOneWidget);
-    expect(find.text('Выполнил: Ковалев М.М.'), findsOneWidget);
-    expect(find.text('Группа: ИКБО-62-23'), findsOneWidget);
+    expect(find.textContaining('Устройство 1 из 5'), findsOneWidget);
+    expect(find.text('Ковалев М.М.   ИКБО-62-23'), findsOneWidget);
     expect(find.byType(SingleChildScrollView), findsOneWidget);
     expect(find.byType(Image), findsWidgets);
   });
@@ -36,7 +35,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Ноутбук'), findsOneWidget);
-    expect(find.text('Устройство 2 из 5'), findsOneWidget);
+    expect(find.textContaining('Устройство 2 из 5'), findsOneWidget);
   });
 
   testWidgets('нажатие на изображение переключает устройство', (
@@ -48,6 +47,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Ноутбук'), findsOneWidget);
-    expect(find.text('Устройство 2 из 5'), findsOneWidget);
+    expect(find.textContaining('Устройство 2 из 5'), findsOneWidget);
   });
 }

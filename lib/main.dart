@@ -86,93 +86,162 @@ class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
     final DeviceItem device = devices[_currentIndex];
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade700,
-        foregroundColor: Colors.white,
-        title: const Text(
-          'Электронные устройства',
-          style: TextStyle(fontFamily: 'DeviceDisplay'),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              device.name,
-              style: const TextStyle(
-                fontFamily: 'DeviceDisplay',
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(device.description, style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 16),
-            InkWell(
-              key: const Key('device-image'),
-              onTap: _showNextDevice,
-              child: Container(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 2),
+          ),
+          child: Column(
+            children: [
+              Container(
                 width: double.infinity,
-                height: 300,
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  border: Border.all(color: Colors.grey.shade400),
+                  color: Colors.blue.shade700,
+                  border: const Border(
+                    bottom: BorderSide(color: Colors.black, width: 2),
+                  ),
                 ),
-                child: Image.asset(
-                  device.imagePath,
-                  fit: BoxFit.contain,
-                  semanticLabel: device.name,
+                child: const Text(
+                  'ЭЛЕКТРОННЫЕ УСТРОЙСТВА',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'DeviceDisplay',
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 6),
-            const Text(
-              'Нажмите на изображение, чтобы показать следующее устройство',
-              style: TextStyle(fontSize: 13, color: Colors.black54),
-            ),
-            const SizedBox(height: 12),
-            const Divider(),
-            const Text(
-              'Характеристики',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            _PropertyRow(
-              icon: Icons.category_outlined,
-              label: 'Категория',
-              value: device.category,
-            ),
-            _PropertyRow(
-              icon: Icons.task_alt,
-              label: 'Назначение',
-              value: device.purpose,
-            ),
-            _PropertyRow(
-              icon: Icons.settings_input_antenna,
-              label: 'Интерфейсы',
-              value: device.interfaces,
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                key: const Key('next-device-button'),
-                onPressed: _showNextDevice,
-                child: const Text('Следующее устройство'),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      _BorderedBox(
+                        minHeight: 64,
+                        child: Text(
+                          device.name,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: 'DeviceDisplay',
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      _BorderedBox(
+                        minHeight: 92,
+                        child: Text(
+                          device.description,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 16, height: 1.35),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 270,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: InkWell(
+                                key: const Key('device-image'),
+                                onTap: _showNextDevice,
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                  ),
+                                  child: Image.asset(
+                                    device.imagePath,
+                                    fit: BoxFit.contain,
+                                    semanticLabel: device.name,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('1. ${device.category}'),
+                                    const SizedBox(height: 8),
+                                    Text('2. ${device.purpose}'),
+                                    const SizedBox(height: 8),
+                                    Text('3. ${device.interfaces}'),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      '4. Устройство ${_currentIndex + 1} из ${devices.length}',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: ElevatedButton(
+                          key: const Key('next-device-button'),
+                          onPressed: _showNextDevice,
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(color: Colors.black),
+                            elevation: 0,
+                            shape: const RoundedRectangleBorder(),
+                          ),
+                          child: const Text('СЛЕДУЮЩЕЕ УСТРОЙСТВО'),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      Row(
+                        children: [
+                          Container(
+                            width: 64,
+                            height: 64,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: const Icon(
+                              Icons.person_outline,
+                              size: 42,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: _BorderedBox(
+                              minHeight: 64,
+                              child: const Text(
+                                'Ковалев М.М.   ИКБО-62-23',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Center(child: Text('Устройство ${_currentIndex + 1} из 5')),
-            const SizedBox(height: 16),
-            const Divider(),
-            const Text(
-              'Выполнил: Ковалев М.М.',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const Text('Группа: ИКБО-62-23'),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -197,25 +266,21 @@ class DeviceItem {
   final String imagePath;
 }
 
-class _PropertyRow extends StatelessWidget {
-  const _PropertyRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
+class _BorderedBox extends StatelessWidget {
+  const _BorderedBox({required this.minHeight, required this.child});
 
-  final IconData icon;
-  final String label;
-  final String value;
+  final double minHeight;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      dense: true,
-      leading: Icon(icon),
-      title: Text(label),
-      subtitle: Text(value),
+    return Container(
+      width: double.infinity,
+      constraints: BoxConstraints(minHeight: minHeight),
+      padding: const EdgeInsets.all(12),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      child: child,
     );
   }
 }
