@@ -14,6 +14,7 @@ class ElectronicDevicesApp extends StatelessWidget {
       title: 'Электронные устройства',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
       home: const ElectronicDevicesPage(),
@@ -76,6 +77,7 @@ class ElectronicDevicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blue.shade700,
         foregroundColor: Colors.white,
@@ -140,6 +142,8 @@ class ElectronicDevicesPage extends StatelessWidget {
           const SizedBox(height: 8),
           for (var index = 0; index < devices.length; index++) ...[
             Card(
+              color: Colors.white,
+              surfaceTintColor: Colors.transparent,
               child: ListTile(
                 key: ValueKey('device-card-$index'),
                 leading: Icon(devices[index].icon, color: Colors.blue.shade700),
