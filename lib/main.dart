@@ -21,228 +21,158 @@ class ElectronicDevicesApp extends StatelessWidget {
   }
 }
 
-class ElectronicDevicesPage extends StatefulWidget {
+class ElectronicDevicesPage extends StatelessWidget {
   const ElectronicDevicesPage({super.key});
 
-  @override
-  State<ElectronicDevicesPage> createState() => _ElectronicDevicesPageState();
-}
-
-class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
   static const List<DeviceItem> devices = [
     DeviceItem(
       name: 'Смартфон',
       category: 'Мобильная электроника',
-      purpose: 'Связь, навигация и приложения',
-      interfaces: 'Сотовая сеть, Wi-Fi и Bluetooth',
-      description: 'Смартфон объединяет средства связи, камеру, навигацию и доступ к цифровым сервисам.',
+      description: 'Средство связи, навигации и работы с приложениями.',
       imagePath: 'assets/images/smartphone.png',
+      icon: Icons.smartphone,
     ),
     DeviceItem(
       name: 'Ноутбук',
       category: 'Компьютерная техника',
-      purpose: 'Работа, обучение и творчество',
-      interfaces: 'Wi-Fi, Bluetooth и USB',
-      description: 'Ноутбук сочетает производительность персонального компьютера и мобильность.',
+      description: 'Переносной компьютер для работы, учёбы и творчества.',
       imagePath: 'assets/images/laptop.png',
+      icon: Icons.laptop_mac,
     ),
     DeviceItem(
       name: 'Цифровая камера',
       category: 'Фото- и видеотехника',
-      purpose: 'Фото- и видеосъёмка',
-      interfaces: 'Wi-Fi, Bluetooth и USB-C',
-      description:
-          'Цифровая камера сохраняет фотографии и видео в электронном формате.',
+      description: 'Устройство для создания фотографий и видеозаписей.',
       imagePath: 'assets/images/camera.png',
+      icon: Icons.photo_camera_outlined,
     ),
     DeviceItem(
       name: 'Беспроводные наушники',
       category: 'Аудиотехника',
-      purpose: 'Прослушивание музыки и связь',
-      interfaces: 'Bluetooth и USB-C',
-      description: 'Беспроводные наушники воспроизводят звук и позволяют общаться без кабеля.',
+      description: 'Устройство для прослушивания звука без проводов.',
       imagePath: 'assets/images/headphones.png',
+      icon: Icons.headphones,
     ),
     DeviceItem(
       name: 'Умные часы',
       category: 'Носимая электроника',
-      purpose: 'Уведомления и контроль активности',
-      interfaces: 'Bluetooth, NFC и Wi-Fi',
-      description: 'Умные часы отображают уведомления и помогают отслеживать физическую активность.',
+      description: 'Устройство для уведомлений и контроля активности.',
       imagePath: 'assets/images/smartwatch.png',
+      icon: Icons.watch_outlined,
     ),
   ];
 
-  int _currentIndex = 0;
-
-  void _showNextDevice() {
-    setState(() {
-      _currentIndex = (_currentIndex + 1) % devices.length;
-    });
+  void _showDeviceMessage(BuildContext context, DeviceItem device) {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text('Выбрано устройство: ${device.name}'),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final DeviceItem device = devices[_currentIndex];
-
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 2),
-          ),
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade700,
-                  border: const Border(
-                    bottom: BorderSide(color: Colors.black, width: 2),
-                  ),
-                ),
-                child: const Text(
-                  'ЭЛЕКТРОННЫЕ УСТРОЙСТВА',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'DeviceDisplay',
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      _BorderedBox(
-                        minHeight: 64,
-                        child: Text(
-                          device.name,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'DeviceDisplay',
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      _BorderedBox(
-                        minHeight: 92,
-                        child: Text(
-                          device.description,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 16, height: 1.35),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        height: 270,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: InkWell(
-                                key: const Key('device-image'),
-                                onTap: _showNextDevice,
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                  ),
-                                  child: Image.asset(
-                                    device.imagePath,
-                                    fit: BoxFit.contain,
-                                    semanticLabel: device.name,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('1. ${device.category}'),
-                                    const SizedBox(height: 8),
-                                    Text('2. ${device.purpose}'),
-                                    const SizedBox(height: 8),
-                                    Text('3. ${device.interfaces}'),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      '4. Устройство ${_currentIndex + 1} из ${devices.length}',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton(
-                          key: const Key('next-device-button'),
-                          onPressed: _showNextDevice,
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.black,
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.black),
-                            elevation: 0,
-                            shape: const RoundedRectangleBorder(),
-                          ),
-                          child: const Text('СЛЕДУЮЩЕЕ УСТРОЙСТВО'),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      Row(
-                        children: [
-                          Container(
-                            width: 64,
-                            height: 64,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                            ),
-                            child: const Icon(
-                              Icons.person_outline,
-                              size: 42,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _BorderedBox(
-                              minHeight: 64,
-                              child: const Text(
-                                'Ковалев М.М.   ИКБО-62-23',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+      appBar: AppBar(
+        backgroundColor: Colors.blue.shade700,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          'ЭЛЕКТРОННЫЕ УСТРОЙСТВА',
+          style: TextStyle(fontFamily: 'DeviceDisplay'),
         ),
+      ),
+      body: ListView(
+        key: const Key('vertical-device-list'),
+        padding: const EdgeInsets.all(16),
+        children: [
+          const Text(
+            'Каталог электронных устройств',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'DeviceDisplay',
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Выберите устройство в списке, чтобы увидеть короткое уведомление с его названием.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, height: 1.35),
+          ),
+          const SizedBox(height: 18),
+          SizedBox(
+            height: 190,
+            child: ListView.separated(
+              key: const Key('horizontal-image-list'),
+              scrollDirection: Axis.horizontal,
+              itemCount: devices.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                final device = devices[index];
+                return SizedBox(
+                  width: 230,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: Image.asset(
+                      device.imagePath,
+                      fit: BoxFit.cover,
+                      semanticLabel: device.name,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Список устройств',
+            style: TextStyle(
+              fontFamily: 'DeviceDisplay',
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          for (var index = 0; index < devices.length; index++) ...[
+            Card(
+              child: ListTile(
+                key: ValueKey('device-card-$index'),
+                leading: Icon(devices[index].icon, color: Colors.blue.shade700),
+                title: Text(devices[index].name),
+                subtitle: Text(
+                  '${devices[index].category}. ${devices[index].description}',
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                onTap: () => _showDeviceMessage(context, devices[index]),
+              ),
+            ),
+            if (index < devices.length - 1) const SizedBox(height: 6),
+          ],
+          const SizedBox(height: 18),
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black54),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.person_outline, size: 34),
+                SizedBox(width: 12),
+                Text(
+                  'Ковалев М.М.   ИКБО-62-23',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -252,35 +182,14 @@ class DeviceItem {
   const DeviceItem({
     required this.name,
     required this.category,
-    required this.purpose,
-    required this.interfaces,
     required this.description,
     required this.imagePath,
+    required this.icon,
   });
 
   final String name;
   final String category;
-  final String purpose;
-  final String interfaces;
   final String description;
   final String imagePath;
-}
-
-class _BorderedBox extends StatelessWidget {
-  const _BorderedBox({required this.minHeight, required this.child});
-
-  final double minHeight;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      constraints: BoxConstraints(minHeight: minHeight),
-      padding: const EdgeInsets.all(12),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-      child: child,
-    );
-  }
+  final IconData icon;
 }
