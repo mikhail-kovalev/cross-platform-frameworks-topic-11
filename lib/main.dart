@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'models/local_account.dart';
+import 'pages/login_page.dart';
+import 'pages/profile_page.dart';
+
 void main() {
   runApp(const ElectronicDevicesApp());
 }
@@ -15,6 +19,18 @@ class ElectronicDevicesApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         scaffoldBackgroundColor: Colors.white,
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: Colors.black),
+        ),
         useMaterial3: true,
       ),
       home: const ElectronicDevicesPage(),
@@ -22,7 +38,7 @@ class ElectronicDevicesApp extends StatelessWidget {
   }
 }
 
-class ElectronicDevicesPage extends StatelessWidget {
+class ElectronicDevicesPage extends StatefulWidget {
   const ElectronicDevicesPage({super.key});
 
   static const List<DeviceItem> devices = [
@@ -63,6 +79,24 @@ class ElectronicDevicesPage extends StatelessWidget {
     ),
   ];
 
+  @override
+  State<ElectronicDevicesPage> createState() => _ElectronicDevicesPageState();
+}
+
+class _ElectronicDevicesPageState extends State<ElectronicDevicesPage> {
+  final _account = LocalAccount();
+  List<DeviceItem> get devices => ElectronicDevicesPage.devices;
+
+  void _openAccount() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => _account.signedIn
+            ? ProfilePage(account: _account)
+            : LoginPage(account: _account),
+      ),
+    );
+  }
+
   void _showDeviceMessage(BuildContext context, DeviceItem device) {
     final messenger = ScaffoldMessenger.of(context);
     messenger.hideCurrentSnackBar();
@@ -82,6 +116,13 @@ class ElectronicDevicesPage extends StatelessWidget {
         backgroundColor: Colors.blue.shade700,
         foregroundColor: Colors.white,
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: _openAccount,
+            tooltip: 'Личный кабинет',
+            icon: const Icon(Icons.person_outline),
+          ),
+        ],
         title: const Text(
           'ЭЛЕКТРОННЫЕ УСТРОЙСТВА',
           style: TextStyle(fontFamily: 'DeviceDisplay'),
