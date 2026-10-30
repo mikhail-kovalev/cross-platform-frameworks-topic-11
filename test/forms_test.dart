@@ -1,6 +1,8 @@
 import 'package:cross_platform_frameworks/main.dart';
 import 'package:cross_platform_frameworks/models/local_account.dart';
 import 'package:cross_platform_frameworks/pages/login_page.dart';
+import 'package:cross_platform_frameworks/pages/home_page.dart';
+import 'package:cross_platform_frameworks/routes.dart';
 import 'package:cross_platform_frameworks/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -100,7 +102,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const ElectronicDevicesApp());
-    await tester.tap(find.byTooltip('Личный кабинет'));
+    await tester.pump(const Duration(seconds: 4));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Нет аккаунта? Зарегистрируйтесь'));
     await tester.pumpAndSettle();
@@ -119,7 +121,16 @@ void main() {
     await tester.enterText(fields.at(3), 'Device1+');
     await tester.tap(find.text('Зарегистрироваться'));
     await tester.pumpAndSettle();
-    expect(find.text('Профиль'), findsOneWidget);
+    expect(find.byType(LoginPage), findsOneWidget);
+    expect(
+      find.text('Регистрация завершена. Войдите в аккаунт'),
+      findsOneWidget,
+    );
+    await tester.enterText(find.byType(TextFormField).at(1), 'Device1+');
+    await tester.tap(find.text('Войти'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Профиль'));
+    await tester.pumpAndSettle();
     fields = find.byType(TextFormField);
     expect(
       tester.widget<TextFormField>(fields.at(0)).controller!.text,
@@ -141,7 +152,12 @@ void main() {
   testWidgets('вход проверяет зарегистрированные данные', (tester) async {
     final account = LocalAccount()
       ..register('Михаил', 'student@example.ru', 'Device1+');
-    await tester.pumpWidget(MaterialApp(home: LoginPage(account: account)));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: LoginPage(account: account),
+        routes: {Routes.home: (_) => const HomePage()},
+      ),
+    );
     final fields = find.byType(TextFormField);
     await tester.enterText(fields.at(0), 'student@example.ru');
     await tester.enterText(fields.at(1), 'Wrong1+');
@@ -151,7 +167,7 @@ void main() {
     await tester.enterText(fields.at(1), 'Device1+');
     await tester.tap(find.text('Войти'));
     await tester.pumpAndSettle();
-    expect(find.text('Профиль'), findsOneWidget);
+    expect(find.byType(HomePage), findsOneWidget);
   });
 
   testWidgets('Next переводит фокус и глаз показывает пароль', (tester) async {
@@ -198,7 +214,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const ElectronicDevicesApp());
-    await tester.tap(find.byTooltip('Личный кабинет'));
+    await tester.pump(const Duration(seconds: 4));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Нет аккаунта? Зарегистрируйтесь'));
     await tester.pumpAndSettle();

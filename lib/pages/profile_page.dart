@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/local_account.dart';
+import '../widgets/app_navigation_bar.dart';
 import '../widgets/text_field.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -112,6 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: 1),
     );
   }
 }

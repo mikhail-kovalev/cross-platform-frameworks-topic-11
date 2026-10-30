@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../models/local_account.dart';
 import '../widgets/text_field.dart';
-import 'login_page.dart';
-import 'profile_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key, required this.account});
@@ -32,11 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     FocusScope.of(context).unfocus();
     widget.account.register(_name.text, _email.text, _password.text);
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => ProfilePage(account: widget.account),
-      ),
-    );
+    Navigator.pop(context, _email.text.trim());
   }
 
   @override
@@ -100,11 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 50),
                 TextButton(
-                  onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute<void>(
-                      builder: (_) => LoginPage(account: widget.account),
-                    ),
-                  ),
+                  onPressed: () => Navigator.pop(context),
                   child: const Text('Уже есть аккаунт? Войдите'),
                 ),
               ],

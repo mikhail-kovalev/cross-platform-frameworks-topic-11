@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/local_account.dart';
+import '../routes.dart';
 import '../widgets/text_field.dart';
-import 'profile_page.dart';
-import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.account});
@@ -41,10 +40,17 @@ class _LoginPageState extends State<LoginPage> {
       );
       return;
     }
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => ProfilePage(account: widget.account),
-      ),
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    Navigator.pushReplacementNamed(context, Routes.home);
+  }
+
+  Future<void> _openRegistration() async {
+    final email = await Navigator.pushNamed(context, Routes.register);
+    if (!mounted || email is! String) return;
+    _email.text = email;
+    _password.clear();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Регистрация завершена. Войдите в аккаунт')),
     );
   }
 
@@ -117,11 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 80),
                 TextButton(
-                  onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute<void>(
-                      builder: (_) => RegisterPage(account: widget.account),
-                    ),
-                  ),
+                  onPressed: _openRegistration,
                   child: const Text('Нет аккаунта? Зарегистрируйтесь'),
                 ),
               ],

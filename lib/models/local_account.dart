@@ -10,7 +10,7 @@ class LocalAccount {
     name = fullName.trim();
     email = address.trim();
     _password = password;
-    signedIn = true;
+    signedIn = false;
   }
 
   bool signIn(String address, String password) {
@@ -22,6 +22,8 @@ class LocalAccount {
   }
 
   void update(String fullName, String address, String password) {
-    register(fullName, address, password);
+    name = fullName.trim();
+    email = address.trim();
+    _password = password;
   }
 }
